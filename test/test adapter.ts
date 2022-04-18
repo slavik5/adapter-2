@@ -143,5 +143,29 @@ describe("Adapter contract", function () {
       console.log(bal2)
     });
   });
+  describe("swapExactTokensForETH", function () {
+    it("swapExactTokensForETH", async function () {
+      token1.approve(adapter.address, parseEther("300"));
+      await adapter.addLiquidityETH(token1.address,parseEther("200"),addr[0].address,{value:parseEther("200")});
+      const bal=await token1.balanceOf(addr[0].address)
+      console.log(bal)
+      let path: string[]=[token1.address, "0xc778417e063141139fce010982780140aa0cd5ab"]
+      await adapter.swapExactTokensForETH(token1.address,parseEther("20"),path,addr[0].address);
+      const bal2=await token2.balanceOf(addr[0].address)
+      console.log(bal2)
+    });
+  });
+  describe("swapExactETHForTokens", function () {
+    it("swapExactETHForTokens", async function () {
+      token1.approve(adapter.address, parseEther("300"));
+      await adapter.addLiquidityETH(token1.address,parseEther("200"),addr[0].address,{value:parseEther("200")});
+      const bal=await token1.balanceOf(addr[0].address)
+      console.log(bal)
+      let path: string[]=[ "0xc778417e063141139fce010982780140aa0cd5ab",token1.address]
+      await adapter.swapExactETHForTokens(token1.address,path,addr[0].address,{value:parseEther("20")});
+      const bal2=await token2.balanceOf(addr[0].address)
+      console.log(bal2)
+    });
+  });
 
 });

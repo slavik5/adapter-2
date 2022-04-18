@@ -221,8 +221,8 @@ contract Adapter{
         address weth=Router.WETH();
         uint256 amountIn =getAmountIn(amountOut, tokenA,weth);
         Router.swapExactTokensForETH(
-            amountOut,
             amountIn,
+            0,
             path,
             to,
             block.timestamp + delay  
